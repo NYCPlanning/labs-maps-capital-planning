@@ -2,4 +2,6 @@
   package = "netlify-plugin-inline-functions-env"
 
 [build]
+  command = "yarn run build"
   functions = "functions"
+  publish = "public"
