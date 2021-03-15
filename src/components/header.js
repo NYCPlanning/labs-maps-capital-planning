@@ -2,29 +2,56 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { group } from 'd3-array';
 
 const Header = ({ siteTitle }) => {
   const data = useStaticQuery(graphql`
     query MapPages {
-      allMdx(sort: {fields: frontmatter___position}) {
+      allMdx(sort: {fields: frontmatter___position, order: [ASC]}) {
         edges {
           node {
             slug
             frontmatter {
               title
-              path
+            }
+            parent {
+              id
+              ... on File {
+                relativeDirectory
+              }
             }
           }
         }
       }
     }
   `)
+ 
+  // groups the pages child pages
+  const pages = Array.from(group(data.allMdx.edges, d => {
+    if (d.node.parent.relativeDirectory) {
+      return d.node.parent.relativeDirectory;
+    } else {
+      return d.node.slug;
+    }
+  }));
 
-  const mapPages = data.allMdx.edges.map((page, i) => (
-    <li key={i}>
-      <Link activeClassName="is-active" to={`/${page.node.slug}`}>{page.node.frontmatter.title}</Link>
-    </li>
-  ));
+  const mapLinks = pages.map(([, pages]) => {
+    const rootPage = pages.find(p => !p.node.parent.relativeDirectory);
+    const childPages = pages.filter(p => p.node.parent.relativeDirectory);
+
+    return (
+      <li key={rootPage.node.slug} className="dropdown">
+        <Link activeClassName="is-active" className="dropbtn" to={`/${rootPage.node.slug}`}>{rootPage.node.frontmatter.title}</Link>
+
+        {(childPages.length > 0) && <div className="button-group small secondary stacked dropdown-content">
+          {childPages.map((page) => 
+            <Link activeClassName="is-active" key={page.node.slug} className="button" to={`/${page.node.slug}`}>
+              {page.node.frontmatter.title}
+            </Link>
+          )}
+        </div>}
+      </li>)
+    });
 
   return (
     <header className="site-header" role="banner">
@@ -41,7 +68,7 @@ const Header = ({ siteTitle }) => {
         </div>
         <nav role="navigation" className="cell medium-shrink responsive show-for-medium hide-for-print" id="menu" data-toggler=".show-for-medium">
           <ul className="menu vertical medium-horizontal">
-            {mapPages}
+            {mapLinks}
             <li><Link activeClassName="is-active" to="/blog">Gallery</Link></li>
             <li><a target="_blank">Login</a></li>
           </ul>

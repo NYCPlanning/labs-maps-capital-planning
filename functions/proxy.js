@@ -51,17 +51,15 @@ const STYLES = `
 const SCRIPTS = `
   <script>
     (function() {
-      const getMapState = (window) => {
-        const currentMapRef = window.location.href;
+      const getUrlSearchParam = (param = 'state', currentMapRef = window.location.href) => {
         const statefulMapUrl = new URL(decodeURIComponent(currentMapRef));
 
-        return statefulMapUrl.searchParams.get('state');
+        return statefulMapUrl.searchParams.get(param);
       }
 
       window.addEventListener('click', () => {
         setTimeout(() => {
-          const state = getMapState(window);
-
+          const state = getUrlSearchParam();
           window.parent.location.hash = state;
         }, 500);
       });
@@ -69,7 +67,12 @@ const SCRIPTS = `
       // initial load. get the map state from parent frame and set it as current map state.
       if (window.parent.location.hash && !window.parent.location.hash.includes('null')) {
         const cleanedParentMapState = window.parent.location.hash.split('#')[1];
+
         history.pushState(null, '', window.location.search + '&state=' + cleanedParentMapState);
+      } else {
+        const mapState = getUrlSearchParam('state', getUrlSearchParam('site'));
+
+        history.pushState(null, '', window.location.search + '&state=' + mapState);
       }
     })(window)
   </script>
