@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Labs Maps`,
+    title: `Maps`,
     description: `Generic CMS for organizing Carto maps`,
     author: `@gatsbyjs`,
   },

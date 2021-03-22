@@ -35,6 +35,12 @@ exports.createPages = ({ graphql, actions }) => {
                 title
                 embed
               }
+              parent {
+                id
+                ... on File {
+                  relativeDirectory
+                }
+              }
             }
           }
         }
@@ -53,6 +59,8 @@ exports.createPages = ({ graphql, actions }) => {
         component: mapPage,
         context: {
           mapUrl: post.node.frontmatter.embed,
+          parent: post.node.parent,
+          ...post.node.frontmatter,
         },
       })
     })

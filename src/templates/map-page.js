@@ -38,6 +38,7 @@ class MapPage extends React.PureComponent {
       <Layout
         location={this.props.location}
         title={this.props.siteTitle}
+        pageContext={this.props.pageContext}
       >
         <SEO
           title="Map"
