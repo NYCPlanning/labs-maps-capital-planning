@@ -4,7 +4,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { group } from 'd3-array';
 
-const Header = ({ siteTitle, pageContext }) => {
+const Header = ({ siteTitle, pageContext = {} }) => {
   const data = useStaticQuery(graphql`
     query MapPages {
       allMdx(sort: {fields: frontmatter___position, order: [ASC]}) {
@@ -62,7 +62,7 @@ const Header = ({ siteTitle, pageContext }) => {
             <img src="https://raw.githubusercontent.com/NYCPlanning/logo/master/dcp_logo_772.png" alt="NYC Planning" className="dcp-logo" />
           </a>
           <Link to="/" className="site-title">{siteTitle}</Link>
-          <span> {pageContext.title} {pageContext.parent.relativeDirectory ? `(${pageContext.parent.relativeDirectory})` : ''}</span>
+          <span> {pageContext.title} {pageContext?.parent?.relativeDirectory ? `(${pageContext.parent.relativeDirectory})` : ''}</span>
         </div>
         <div className="cell auto hide-for-medium text-right">
           <button className="responsive-nav-toggler hide-for-print" data-toggle="menu">Menu</button>
