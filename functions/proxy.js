@@ -34,6 +34,10 @@ const STYLES = `
       padding: 0;
     }
 
+    .is-collapsed {
+      display: none;
+    }
+
     @media only screen and (max-width: 760px)  {
       .CDB-Embed-tab.is-active {
         flex-direction: column;
