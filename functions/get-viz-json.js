@@ -10,7 +10,7 @@ exports.handler = async (event) => {
 
   const [firstAnalysis] = response.body.analyses
   const analysisUrl = `https://${userName}.carto.com/api/v3/viz/${id}/analyses/${firstAnalysis.id}?api_key=${process.env.CARTO_MASTER_KEY}`;
-  console.log(analysisUrl);
+
   const analysis = await request
     .get(analysisUrl);
 
