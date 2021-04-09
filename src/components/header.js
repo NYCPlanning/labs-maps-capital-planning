@@ -70,8 +70,8 @@ const Header = ({ siteTitle, pageContext = {} }) => {
         <nav role="navigation" className="cell medium-shrink responsive show-for-medium hide-for-print" id="menu" data-toggler=".show-for-medium">
           <ul className="menu vertical medium-horizontal">
             {mapLinks}
-            <li><Link activeClassName="is-active" to="/blog">Gallery</Link></li>
-            <li><a target="_blank">Login</a></li>
+            {/* <li><Link activeClassName="is-active" to="/blog">Gallery</Link></li>
+            <li><a target="_blank">Login</a></li> */}
           </ul>
         </nav>
       </div>
