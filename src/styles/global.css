@@ -78,3 +78,19 @@ body {
 .dropdown:hover .dropbtn {
   background-color: rgba(0,0,0,.04);
 }
+/* 
+.main-map {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.detail-view {
+  width: 25%;
+  margin: 1em;
+} */
+
+.download-button {
+  margin: 0 !important;
+}
+

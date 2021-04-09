@@ -2,6 +2,7 @@
 import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import DownloadMapData from "../components/downloadMapData"
 
 // specially combines URL with current map state
 const constructCartoProxyUrl = (cartoMapUrl, stateParam = '') => {
@@ -27,13 +28,15 @@ class MapPage extends React.PureComponent {
       props.pageContext.mapUrl,
       props.location.search,
     );
-
+    
     this.state = {
       url: combinedUrl,
     };
   }
 
   render() {
+    const dynamicFilters = decodeURIComponent(this.props.pageContext.mapUrl.split('?state=')[1]);
+
     return (
       <Layout
         location={this.props.location}
@@ -48,6 +51,11 @@ class MapPage extends React.PureComponent {
           className="carto-embedded-iframe"
           title="Embedded Map"
           src={this.state.url}
+        />
+        <DownloadMapData
+          className="download-button"
+          mapUrl={this.props.pageContext.mapUrl}
+          urlState={dynamicFilters}
         />
       </Layout>
     )
