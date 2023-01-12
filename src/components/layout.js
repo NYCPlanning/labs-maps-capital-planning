@@ -8,7 +8,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import Header from "./header"
 
 const Layout = ({ children, loaded = true, pageContext }) => {
   const data = useStaticQuery(graphql`
@@ -23,10 +22,6 @@ const Layout = ({ children, loaded = true, pageContext }) => {
 
   return (
     <>
-      <Header
-        siteTitle={data.site.siteMetadata?.title || `Title`}
-        pageContext={pageContext}
-      />
       {children}
     </>
   )
